@@ -10,29 +10,34 @@ const categoriesContainerElement: HTMLElement =
 
 let selectedCategory: Category;
 
-const categories: Category[] = ['general', 'work', 'gym', 'hobby'];
+// const categories: Category[] = ['general', 'work', 'gym', 'hobby'];
+const categories: Category[] = [Category.GENERAL, Category.WORK, Category.GYM, Category.HOBBY];
 
 const tasks: Task[] = [
   {
     name: 'Wyrzucić śmieci',
     done: false,
-    category: 'hobby',
+    category: Category.HOBBY,
   },
   {
     name: 'Pójść na siłownię',
     done: true,
-    category: 'gym',
+    category: Category.GYM,
   },
   {
     name: 'Nakarmić koty',
     done: false,
-    category: 'work',
+    category: Category.WORK,
   },
 ];
 
 const addTask = (task: Task) => {
   tasks.push(task);
 };
+
+const updateSelectedCategory = (newCategory: Category) => {
+  selectedCategory = newCategory;
+}
 
 addButtonElement.addEventListener('click', (e: Event) => {
   // const selectedRadioElement: HTMLInputElement = document.querySelector(
@@ -48,6 +53,14 @@ addButtonElement.addEventListener('click', (e: Event) => {
   renderTasks(tasks, tasksContainerElement);
 });
 
-addTask({ name: 'zrobić klatę', category: 'gym', done: false });
-renderCategories(categories, categoriesContainerElement,selectedCategory );
+type TaskAsTuple = [string, Category, boolean]
+const task: TaskAsTuple = ["zrobić klatę", Category.GYM, false]
+
+const taskName = task[0]
+const taskCategory = task[1]
+const taskDoneStatus = task[2]
+
+
+addTask({ name: taskName, category: taskCategory, done: taskDoneStatus });
+renderCategories(categories, categoriesContainerElement,updateSelectedCategory );
 renderTasks(tasks, tasksContainerElement);
